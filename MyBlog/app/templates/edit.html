@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+    <header class="intro-header" style="background-image: url('/static/img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Edit A Article</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <form class="form-horizontal" method="post" action="">
+                    {{ form.csrf_token }}
+                    {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="inputTitle" class="control-label">{{ form.title.label }}</label>
+                        <span>{{ form.title(class="form-control") }}</span>
+                </div>
+                <div class="form-group">
+                    <label for="inputBody" class="control-label">{{ form.body.label }}</label>
+                        <span>{{ form.body(class="form-control",rows='15',placeholder='Support Markdown') }}</span>
+                </div>
+                <div class="form-group">
+                    <label for="inputSummary" class="control-label">{{ form.summary.label }}</label>
+                    <span>{{ form.summary(class="form-control",rows='7',placeholder='Support Markdown') }}</span>
+                </div>
+                <div class="form-group">
+                    <label for="inputCategory" class="control-label">{{ form.category.label }}</label>
+                    <select class="form-control" name="category">
+                        {% for choice in form.category.choices %}
+                            <option value="{{ choice[0] }}" {% if form.category.data == choice[0] %}selected="selected"{% endif %}>
+                                {{ choice[1] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-default">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{{ pagedown.include_pagedown() }}
+{% endblock %}

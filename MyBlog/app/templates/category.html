@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ category.tag }}
+{% endblock %}
+
+
+{% block body %}
+    <!-- Page Header -->
+    <header class="intro-header" style="background-image: url('/static/img/header.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>{{ category.tag }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+     <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1">
+                {% for post in posts %}
+                <div class="post-preview">
+                    <a href="/post/{{ post.id }}">
+                        <h2 class="post-title">
+                            {{ post.title }}
+                        </h2>
+                    </a>
+                        <p class="post-meta">
+                            <small><span class="glyphicon glyphicon-calendar" aria-hidden="true">{{ post.timestamp }}</span></small>
+                            {% if current_user.is_authenticated %}
+                            <a href="/edit/{{ post.id }}">
+                                <span class="label label-primary">Edit &nbsp;</span>
+                            </a>
+                            <a href="/delete/{{ post.id }}">
+                                <span class="label label-danger">Delete</span>
+                            </a>
+                            {% endif %}
+                        </p>
+                        <p class="post">
+                            {{ post.summary }}
+                        </p>
+                </div>
+                {% endfor %}
+                <!-- Pager -->
+                <hr>
+                <ul class="pager">
+                    {% if pagination.has_next %}
+                    <li class="next">
+                        <a href="?page={{ pagination.next_num }}">Older Posts &rarr;</a>
+                    </li>
+                    {% endif %}
+                    {% if pagination.has_prev %}
+                    <li class="prev">
+                        <a href="?page={{ pagination.prev_num }}">&larr; Previous Posts</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+     </div>
+{% endblock %}
