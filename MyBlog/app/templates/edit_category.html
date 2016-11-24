@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <header class="intro-header" style="background-image: url('/static/img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Edit Category</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3>Category</h3>
+                <hr>
+                <ul>
+                    {% for category in categorys %}
+                        <li>
+                            <span>{{ category.tag }}</span>
+                            <span class="badge text-right" style="float:right">{{ category.posts.count() }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <form class="form-horizontal" method="post" action="">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        <label for="inputTag" class="control-label">{{ form.tag.label }}</label>
+                        <span>{{ form.tag(class="form-control",placeholder="Input New Tag") }}</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-default">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

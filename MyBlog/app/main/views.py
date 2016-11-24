@@ -2,7 +2,7 @@ from flask import render_template, redirect, flash, url_for, request, current_ap
 from . import main
 from app import mysqldb
 from ..models import User, Post, Category
-from .forms import LoginForm, PostForm
+from .forms import LoginForm, PostForm, CategoryForm
 from flask_login import login_user, login_required, logout_user, current_user
 
 
@@ -88,3 +88,15 @@ def category(tag):
     posts = pagination.items
     return render_template('category.html', posts=posts, pagination=pagination,
                            category=category)
+
+@main.route('/edit_category', methods=['GET', 'POST'])
+def edit_category():
+    form = CategoryForm()
+    categorys = Category.query.all()
+    if form.validate_on_submit():
+        if form.tag.data not in categorys:
+            new_tag = Category(tag=form.tag.data)
+            mysqldb.session.add(new_tag)
+            mysqldb.session.commit()
+            redirect(url_for('main.edit_category'))
+    return render_template('edit_category.html', form=form, categorys=categorys)

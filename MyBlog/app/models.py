@@ -62,18 +62,7 @@ class Category(mysqldb.Model):
     __tablename__ = 'categorys'
     id = mysqldb.Column(mysqldb.Integer, primary_key=True)
     tag = mysqldb.Column(mysqldb.String(64), unique=True)
-    #count = mysqldb.Column(mysqldb.Integer)
     posts = mysqldb.relationship('Post', backref='category', lazy='dynamic')
-
-    @staticmethod
-    def insert_category():
-        category_list = ['Python', 'Web开发', 'Linux', '数据库', '前端', '生活随笔']
-        for category in category_list:
-            post_category = Category.query.filter_by(tag=category).first()
-            if post_category is None:
-                post_category = Category(tag=category)
-                mysqldb.session.add(post_category)
-        mysqldb.session.commit()
 
     def __repr__(self):
         return self.tag

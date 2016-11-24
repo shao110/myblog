@@ -20,3 +20,8 @@ class PostForm(Form):
         super(PostForm, self).__init__(*args, **kwargs)
         self.category.choices = [(category.id, category.tag)
                                  for category in Category.query.order_by(Category.tag).all()]
+
+class CategoryForm(Form):
+    tag = StringField('Tag', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
